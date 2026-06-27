@@ -93,12 +93,12 @@ export default function YouTubeStyleIntro() {
             {/* Profile Image */}
             <motion.div
               variants={itemVariants}
-              className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-full border-2 border-white/20 overflow-hidden"
+              className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-full border-2 border-white/20 overflow-hidden "
             >
               <img
                 src="https://marketerarif.com/images/marketerarifImages/marketerarifHossain.jpg?auto=format&fit=crop&q=80&w=200&h=200"
                 alt="Avatar"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover "
               />
             </motion.div>
 
