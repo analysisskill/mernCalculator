@@ -14,14 +14,25 @@ import YtIntro from "./components/YtIntro";
  * TODO: render History
  *
  */
-
 const InitialInputState = {
   a: 0,
   b: 0,
 };
+
+function* generateId() {
+  let id = 0;
+
+  while (true) {
+    yield id++;
+  }
+}
+const getId = generateId();
+
 function App() {
   const [inputValue, setinputValue] = useState({ ...InitialInputState });
   const [Result, setResult] = useState(0);
+  const [Historeis, setHistoreis] = useState([]);
+  const [RestoreHistory, setRestoreHistory] = useState(null);
 
   const handleInputField = (e) => {
     setinputValue({
@@ -35,6 +46,11 @@ function App() {
   };
 
   const handleArithmeticOperation = (operations) => {
+    if (!inputValue.a || !inputValue.b) {
+      alert("invalid input");
+      return;
+    }
+
     // console.log(operations);
     // console.log(eval(`${inputValue.a} ${operations} ${inputValue.b}`));
 
@@ -45,9 +61,26 @@ function App() {
       
       `,
     );
-    setResult(result(operations));
+    const results = result(operations);
+    setResult(results);
     // console.log(result);
     // console.log(result(operations));
+
+    const historyItem = {
+      id: getId.next().value,
+      inputs: { ...inputValue },
+      operations,
+      results,
+      date: new Date(),
+    };
+    setHistoreis([historyItem, ...Historeis]);
+    console.log(historyItem);
+  };
+
+  const restoreHistoryItem = (historyItem) => {
+    setinputValue({ ...historyItem.inputs });
+    setResult(historyItem.results);
+    setRestoreHistory(historyItem);
   };
 
   // const handleInputOperation = () => {};
@@ -111,6 +144,33 @@ function App() {
           Reset
         </button>
       </section>
+
+      <div className="history-cal">
+        <h2>Hostory</h2>
+        {Historeis.length === 0 ? (
+          <p>No history here</p>
+        ) : (
+          <ul>
+            {Historeis.map((historyItems) => (
+              <li key={historyItems.id}>
+                Operation: {historyItems.inputs.a} {historyItems.operations}
+                {historyItems.inputs.b} , Result: {historyItems.results} <br />
+                <span>{historyItems.date.toLocaleDateString()}</span>
+                <button
+                  type="button"
+                  onClick={() => restoreHistoryItem(historyItems)}
+                  disabled={
+                    RestoreHistory != null &&
+                    RestoreHistory.id === historyItems.id
+                  }
+                >
+                  Restore
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       {/* YouTube-Style Intro - Just import and use! */}
       <YouTubeStyleIntro

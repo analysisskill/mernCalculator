@@ -120,3 +120,28 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.history-cal {
+  position: absolute;
+  left: 75%;
+  top: 17%;
+  z-index: 9;
+}
+.history-cal button {
+  cursor: pointer;
+  background: #ddd;
+  padding: 5px;
+  border-radius: 5px;
+  color: #111111;
+  display: block;
+}
+.history-cal ul li {
+  border: 2px solid #ddd;
+  box-shadow: #000000 2px 2px 20px;
+  margin: 0;
+  margin-bottom: 4px;
+  padding: 9px;
+}
+button:disabled {
+  background: rgb(93, 24, 159);
+}
